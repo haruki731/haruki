@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained(); 
-            $table->string('title', 50);
+            $table->foreignId('users_id')->constrained();
+            $table->string('title', 50)->nullable();
             $table->string('function',30);
-            $table->float('section',10,4);
-            $table->binary('graph');
-            $table->float('response');
-            $table->string('body', 200);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->int('differential')->nullable();
+            $table->float('start',5,4);
+            $table->float('end',5,4);
+            $table->binary('graph')->nullable();
+            $table->float('response')->nullable();
+            $table->string('body', 200)->nullable();
+            $table->timestamps()->nullable();
+            $table->softDeletes()->nullable();
         });
     }
 

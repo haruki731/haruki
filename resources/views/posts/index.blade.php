@@ -72,7 +72,9 @@
             <input type="text" id="from" placeholder="から (例: 0)">
             <input type="text" id="to" placeholder="まで (例: 1)" style="margin-top: 10px;">
         </div>
-        <button>完了</button>
+        <button id='result' class='button'>
+            <a href='/posts/result'>完了</a>
+        </button>
         <button class="secondary-button">みんなの投稿を見る</button>
     </div>
 </body>

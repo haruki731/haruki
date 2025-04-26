@@ -15,5 +15,9 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function() {
-    return view('posts.index');
+    return view('posts.result');
 });
+
+Route::get('/posts/result', [PostController::class ,'result']);
+// '/posts/{対象データのID}'にGetリクエストが来たら、PostControllerのshowメソッドを実行する
+
