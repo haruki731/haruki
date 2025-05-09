@@ -14,7 +14,11 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        //'posts_id'
+        'user_id',
+        'function',
+        'start',
+        'end',
+        'response'
     ];
 
     //public function getByLimit(int $limit_count = 5)

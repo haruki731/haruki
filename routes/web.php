@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -14,10 +15,24 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function() {
-    return view('posts.result');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/posts/result', [PostController::class ,'result']);
-// '/posts/{対象データのID}'にGetリクエストが来たら、PostControllerのshowメソッドを実行する
+Route::middleware('auth')->group(function () {
+    Route::get('/posts/result', [PostController::class, 'result'])->name('result');
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/posts/posts', [PostController::class, 'posts']);
+    Route::get('/posts/{post}', [PostController::class ,'show']);
+    //Route::post('/posts/create/{title}/{body}/{func}/{start}/{end}/{response}', [PostController::class, 'post'])->name();
+    //Route::post('/posts/posts', [PostController::class, 'destroy'])->name();
+});
 
+require __DIR__.'/auth.php';

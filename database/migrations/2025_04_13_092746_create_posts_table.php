@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title', 50)->nullable();
             $table->string('function',30);
-            $table->int('differential')->nullable();
+            //$table->int('differential')->nullable();
             $table->float('start',5,4);
             $table->float('end',5,4);
-            $table->binary('graph')->nullable();
             $table->float('response')->nullable();
             $table->string('body', 200)->nullable();
-            $table->timestamps()->nullable();
+            $table->timestamps();
             $table->softDeletes()->nullable();
         });
     }
