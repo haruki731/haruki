@@ -76,10 +76,10 @@
                     <input type="text" id="function" name="post[function]" placeholder="例: sin(x)*x">
                     
                     <label for="start">積分区間開始点:</label>
-                    <input type="number" id="start" name="post[start]" placeholder="例: -5">
+                    <input type="number" step="0.000001" id="start" name="post[start]" placeholder="例: -5">
                     
                     <label for="end">積分区間終了点:</label>
-                    <input type="number" id="end" name="post[end]" placeholder="例: 5">
+                    <input type="number" step="0.000001" id="end" name="post[end]" placeholder="例: 5">
                     
                     <button onclick="updateGraph()">アップデート</button>
                     <div class="output-area" id="result">Sum = </div>
