@@ -16,9 +16,9 @@ use App\Http\Controllers\PostController;
 */
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', function ()  {
+     return view('welcome');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts/posts', [PostController::class, 'posts']);
     Route::get('/posts/{post}', [PostController::class ,'show']);
+    Route::delete('/posts/{post}', [PostController::class,'delete']);
     //Route::post('/posts/create/{title}/{body}/{func}/{start}/{end}/{response}', [PostController::class, 'post'])->name();
     //Route::post('/posts/posts', [PostController::class, 'destroy'])->name();
 });

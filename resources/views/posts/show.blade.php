@@ -83,6 +83,23 @@
                 <input type="number" id="start" value="{{ $post->start }}">
                 <input type="number" id="end" value="{{ $post->end }}">
         </div>
+        <div class='result'>
+            <!-- <div class="input-area">
+                <label for="function">被積分関数:</label>
+                <input type="text" id="function" name="post[function]" placeholder="例: sin(x)*x">
+                
+                <label for="start">積分区間開始点:</label>
+                <input type="number" id="start" name="post[start]" placeholder="例: -5">
+                
+                <label for="end">積分区間終了点:</label>
+                <input type="number" id="end" name="post[end]" placeholder="例: 5"> 
+                -->
+                <button onclick="updateGraph()">アップデート</button>
+                <div class="output-area" id="result">Sum = </div>
+            </div>     
+        </div>
+
+
         <div id="jxgbox"></div>
         <script>
             // 初期化ボード
@@ -147,7 +164,7 @@
             };
         </script>
         <div class="footer">
-            <a href="/">戻る</a>
+            <a href="/posts/posts">戻る</a>
         </div>
     </body>
 </html>
