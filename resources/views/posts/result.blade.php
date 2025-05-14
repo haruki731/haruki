@@ -63,6 +63,7 @@
     </style>
 </head>
 <body>
+
     <form action="/posts" method="POST">
             @csrf
             <div class="title">
@@ -73,7 +74,7 @@
             <div class='result'>
                 <div class="input-area">
                     <label for="function">被積分関数:</label>
-                    <input type="text" id="function" name="post[function]" placeholder="例: sin(x)*x">
+                    <input type="text" id="function" name="post[function]" placeholder="例: x*(sin(x))^2">
                     
                     <label for="start">積分区間開始点:</label>
                     <input type="number" step="0.000001" id="start" name="post[start]" placeholder="例: -5">
@@ -81,7 +82,7 @@
                     <label for="end">積分区間終了点:</label>
                     <input type="number" step="0.000001" id="end" name="post[end]" placeholder="例: 5">
                     
-                    <button onclick="updateGraph()">アップデート</button>
+                    <button type="button" onclick="updateGraph()">完了</button>
                     <div class="output-area" id="result">Sum = </div>
                 </div>    
             </div>
@@ -157,7 +158,7 @@
     };
 </script>
 <!-- <a href='/posts/create'>[ 投稿する ]</a> -->
-<a href='/posts/create/{func}/{start}/{end}'>[ 投稿する ]</a>
+<!-- <a href='/posts/create/{func}/{start}/{end}'>[ 投稿する ]</a> -->
 
 <a href="/posts/posts">[ みんなの投稿を見る ]</a>
 

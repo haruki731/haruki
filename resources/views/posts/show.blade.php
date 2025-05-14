@@ -80,8 +80,8 @@
                 <div id="start"><p>{{ $post->start }}</p></div>
                 <div id="end"><p>{{ $post->end }}</p></div> -->
                 <input type="text" id="function" value="{{ $post->function }}">
-                <input type="number" id="start" value="{{ $post->start }}">
-                <input type="number" id="end" value="{{ $post->end }}">
+                <input type="number" step="0.000001" id="start" value="{{ $post->start }}">
+                <input type="number" step="0.000001" id="end" value="{{ $post->end }}">
         </div>
         <div class='result'>
             <!-- <div class="input-area">
