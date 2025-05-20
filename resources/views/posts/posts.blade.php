@@ -30,5 +30,8 @@
                 }
             }
         </script>
+        <div class="footer">
+            <a href="/posts/result">[ 積分値を求める画面へ ]</a>
+        </div>
     </body>
 </html>

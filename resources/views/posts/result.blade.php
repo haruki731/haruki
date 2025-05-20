@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.1.0/jsxgraphcore.min.js"></script>
     <title>積分計算ツール</title>
     <style>
-        body {
+         /* body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -15,7 +15,6 @@
             flex-direction: column;
         }
         .input-area {
-            /* position: absolute; */
             position: right;
             top: 10px;
             left: 10px;
@@ -59,12 +58,50 @@
             width: 1000px;
             height: 500px;
             margin: 50px auto;
+        } */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+        .input-area {
+            width: 300px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-area input, .input-area button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        .input-area button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .graph-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #jxgbox {
+            width: 80%;
+            height: 700px;
         }
     </style>
 </head>
 <body>
-
     <form action="/posts" method="POST">
+    <a href="/posts/posts">[ みんなの投稿を見る ]</a>
             @csrf
             <div class="title">
                 <h2>Title</h2>
@@ -77,10 +114,10 @@
                     <input type="text" id="function" name="post[function]" placeholder="例: x*(sin(x))^2">
                     
                     <label for="start">積分区間開始点:</label>
-                    <input type="number" step="0.000001" id="start" name="post[start]" placeholder="例: -5">
+                    <input type="number" step="0.00000001" id="start" name="post[start]" placeholder="例: -5">
                     
                     <label for="end">積分区間終了点:</label>
-                    <input type="number" step="0.000001" id="end" name="post[end]" placeholder="例: 5">
+                    <input type="number" step="0.00000001" id="end" name="post[end]" placeholder="例: 5">
                     
                     <button type="button" onclick="updateGraph()">完了</button>
                     <div class="output-area" id="result">Sum = </div>
@@ -94,73 +131,77 @@
         <input type="submit" value="投稿する"/>
     </form>
 
+    <div class="graph-container">
+        <div id="jxgbox"></div>
+    </div>
 
-
-<div id="jxgbox"></div>
-
-<script>
-    // 初期化ボード
-    var board = JXG.JSXGraph.initBoard('jxgbox', {
-        axis: true,
-        boundingbox: [-8, 4, 8, -4],
-        showNavigation: true
-    });
-
-    // グラフとリーマン和オブジェクトを保持
-    var graph = null;
-    var os = null;
-
-    // グラフ描画関数
-    var updateGraph = function () {
-        // 入力値を取得
-        var func = document.getElementById("function").value;
-        var start = parseFloat(document.getElementById("start").value);
-        var end = parseFloat(document.getElementById("end").value);
-
-        // 入力値が有効かチェック
-        if (!func || isNaN(start) || isNaN(end)) {
-            alert("正しい値を入力してください！");
-            return;
-        }
-
-        // 既存のグラフとリーマン和を削除
-        if (graph) board.removeObject(graph);
-        if (os) board.removeObject(os);
-
-        // 新しい関数を設定
-        var f = board.jc.snippet(func, true, 'x', false);
-
-        // グラフ描画
-        graph = board.create('functiongraph', [
-            f,
-            //function () { return start; },
-            //function () { return end; }
-        ]);
-
-        // リーマン和描画
-        os = board.create('riemannsum', [
-            f,
-            function () { return (end-start)*1000; }, // 分割数を固定値に設定
-            function () { return "left"; },
-            function () { return start; },
-            function () { return end; }
-        ], {
-            fillColor: '#FFFF00',
-            fillOpacity: 0.7
+    <script>
+        // 初期化ボード
+        var board = JXG.JSXGraph.initBoard('jxgbox', {
+            axis: true,
+            boundingbox: [-8, 7, 8, -7],
+            showNavigation: true
         });
 
-        // 積分結果を表示
-        var sum = JXG.Math.Numerics.riemannsum(f, 1000, 'left', start, end).toFixed(4);
-        document.getElementById("result").textContent = "Sum = " + sum;
+        // グラフとリーマン和オブジェクトを保持
+        var graph = null;
+        var os = null;
 
-        board.update();
-    
-    };
-</script>
-<!-- <a href='/posts/create'>[ 投稿する ]</a> -->
-<!-- <a href='/posts/create/{func}/{start}/{end}'>[ 投稿する ]</a> -->
+        // グラフ描画関数
+        var updateGraph = function () {
+            // 入力値を取得
+            var func = document.getElementById("function").value;
+            var start = parseFloat(document.getElementById("start").value);
+            var end = parseFloat(document.getElementById("end").value);
 
-<a href="/posts/posts">[ みんなの投稿を見る ]</a>
+            // 入力値が有効かチェック
+            if (!func || isNaN(start) || isNaN(end)) {
+                alert("正しい値を入力してください！");
+                return;
+            }
 
+            // 既存のグラフとリーマン和を削除
+            if (graph) board.removeObject(graph);
+            if (os) board.removeObject(os);
+
+            // 新しい関数を設定
+            var f = board.jc.snippet(func, true, 'x', false);
+
+            // グラフ描画
+            graph = board.create('functiongraph', [
+                f,
+                //function () { return start; },
+                //function () { return end; }
+            ]);
+
+            // リーマン和描画
+            // os = board.create('riemannsum', [
+            //     f,
+            //     function () { return (end-start)*1000; }, // 分割数を固定値に設定
+            //     function () { return "left"; },
+            //     function () { return start; },
+            //     function () { return end; }
+            // ], {
+            //     fillColor: '#FFFF00',
+            //     fillOpacity: 0.7
+            // });
+
+            os = board.create('riemannsum', [
+                f, 
+                function () { return (end-start)*1000; }, 
+                "left", start, end
+            ], { 
+                fillColor: '#FFFF00', 
+                fillOpacity: 0.7 
+            });
+
+            // 積分結果を表示
+            var sum = JXG.Math.Numerics.riemannsum(f, 1000, 'left', start, end).toFixed(4);
+            document.getElementById("result").textContent = "Sum = " + sum;
+
+            board.update();
+        
+        };
+    </script>
 </body>
 </html>
